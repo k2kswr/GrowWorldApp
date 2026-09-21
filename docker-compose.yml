@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: growworld
+      POSTGRES_USER: growworld
+      POSTGRES_PASSWORD: growworld
+    ports: ["5432:5432"]
+    volumes: [postgres-data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U growworld -d growworld"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  backend:
+    build: ./backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/growworld
+      SPRING_DATASOURCE_USERNAME: growworld
+      SPRING_DATASOURCE_PASSWORD: growworld
+      APP_JWT_SECRET: change-this-development-secret-to-at-least-32-characters
+      APP_CORS_ORIGIN: http://localhost:3000
+    ports: ["8080:8080"]
+    restart: on-failure
+    depends_on:
+      db:
+        condition: service_healthy
+  frontend:
+    build: ./frontend
+    ports: ["3000:3000"]
+    depends_on: [backend]
+volumes:
+  postgres-data:

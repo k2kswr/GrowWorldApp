@@ -1,0 +1,1 @@
+package com.growworld.repository; import com.growworld.domain.WorldUnlock; import java.util.*; import org.springframework.data.jpa.repository.JpaRepository; public interface WorldUnlockRepository extends JpaRepository<WorldUnlock,UUID>{List<WorldUnlock> findByRequiredLevelLessThanEqualOrderBySortOrder(int level);}

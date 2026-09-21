@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/growworld}
+    username: ${SPRING_DATASOURCE_USERNAME:growworld}
+    password: ${SPRING_DATASOURCE_PASSWORD:growworld}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+app:
+  cookie-secure: ${APP_COOKIE_SECURE:false}
+  jwt:
+    secret: ${APP_JWT_SECRET:development-only-secret-change-me-to-at-least-32-characters}
+    expiration-hours: 168
+  cors-origin: ${APP_CORS_ORIGIN:http://localhost:3000}

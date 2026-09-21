@@ -1,0 +1,1 @@
+package com.growworld.repository; import com.growworld.domain.LevelThreshold; import org.springframework.data.jpa.repository.JpaRepository; public interface LevelThresholdRepository extends JpaRepository<LevelThreshold,Integer>{}

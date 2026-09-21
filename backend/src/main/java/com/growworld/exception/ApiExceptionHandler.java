@@ -1,0 +1,3 @@
+package com.growworld.exception;
+import org.springframework.http.*; import org.springframework.web.bind.MethodArgumentNotValidException; import org.springframework.web.bind.annotation.*;
+@RestControllerAdvice public class ApiExceptionHandler { @ExceptionHandler(MethodArgumentNotValidException.class) ProblemDetail invalid(MethodArgumentNotValidException ex){var p=ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,"入力内容を確認してください");p.setProperty("fields",ex.getBindingResult().getFieldErrors().stream().collect(java.util.stream.Collectors.toMap(x->x.getField(),x->x.getDefaultMessage(),(a,b)->a)));return p;} }
