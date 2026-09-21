@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: growworld-api-k2kswr
+    runtime: docker
+    repo: https://github.com/k2kswr/GrowWorldApp
+    branch: main
+    region: singapore
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /api/v1/auth/csrf
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: growworld-db
+          property: connectionString
+      - key: APP_JWT_SECRET
+        generateValue: true
+      - key: APP_COOKIE_SECURE
+        value: "true"
+      - key: APP_CORS_ORIGIN
+        value: https://frontend-kengoris-projects.vercel.app
+
+databases:
+  - name: growworld-db
+    region: singapore
+    plan: free
